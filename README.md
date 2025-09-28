@@ -1,5 +1,4 @@
 # Smart-Transport-Management-System
-🚍 Smart Transport Management System
 
 The Smart Transport Management System is an AI-powered web application designed to enhance and modernize university transportation services. This system automates key processes, optimizes resource utilization, and ensures a seamless experience for students, staff, and administrators.
 
