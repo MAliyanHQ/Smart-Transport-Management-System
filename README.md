@@ -1,7 +1,5 @@
 # Smart-Transport-Management-System
 🚍 Smart Transport Management System
-🔗 Project Demonstration: https://www.youtube.com/watch?v=ClIki3wUols
-For the source code, email aliyanqureshi.002@gmail.com 📩
 
 The Smart Transport Management System is an AI-powered web application designed to enhance and modernize university transportation services. This system automates key processes, optimizes resource utilization, and ensures a seamless experience for students, staff, and administrators.
 
