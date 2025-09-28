@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🚍 Smart Transport Management System
 
 A Django-based transport management system designed for students, drivers, and managers. The system provides bus trip assignments, driver management, payment automation, and real-time bus stop management using Google Maps API.
@@ -125,5 +124,4 @@ Enables administrators to monitor operations efficiently.
 University transportation management can be complex, with challenges like scheduling conflicts, inefficient routes, and payment tracking. This system integrates AI to provide a cost-effective, scalable, and user-friendly solution that ensures a smoother, more reliable experience for all users.
 
 🚀 Streamline university transport operations with AI-powered efficiency!
->>>>>>> 5a2a1fbf12fc56344b6cc2b4d5917457e39f2722
 
