@@ -1,0 +1,45 @@
+{% extends "home.html" %}
+
+{% block title %}Manage Payments{% endblock %}
+
+{% block content %}
+<div class="payment-management-container">
+    
+    <!-- 📌 Page Title -->
+    <h2 class="payment-title">Manage Student Payments</h2>
+
+    <!-- 📊 Payments Table -->
+    <table class="payment-table">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Amount Due</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Toggle Payment</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in students %}
+            <tr>
+                <td>{{ payment.student.username }}</td>
+                <td>PKR {{ payment.amount }}</td>
+                <td>{{ payment.due_date|date:"F d, Y" }}</td>
+                <td class="{% if payment.status == 'pending' %}status-pending{% else %}status-paid{% endif %}">
+                    {{ payment.status|title }}
+                </td>
+                <td>
+                    <a href="{% url 'toggle_payment_status' payment.id %}" class="btn-toggle-payment">
+                        Toggle Status
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="no-payment-records">No payments found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

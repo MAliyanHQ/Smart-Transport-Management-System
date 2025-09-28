@@ -1,0 +1,99 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+{% block title %}Find Your Bus{% endblock %}
+
+{% block content %}
+<div class="bus-container">
+    <h2>Find the Best Bus Route</h2>
+
+    <div id="map-container" class="bus-map-container"></div>
+
+    <form method="POST" class="bus-form">
+        {% csrf_token %}
+        
+        <label for="current-location">Select Your Current Location:</label>
+        <button type="button" id="select-location-btn" class="bus-location-btn">Pick Current Location</button>
+        <input type="hidden" id="current-lat" name="current_lat">
+        <input type="hidden" id="current-lng" name="current_lng">
+        <p id="current-location-display" class="bus-location-display"></p>
+
+        <label for="destination">Select Your Destination Bus Stop:</label>
+        <select id="destination" name="destination_stop_id" required>
+            {% for stop in bus_stops %}
+            <option value="{{ stop.id }}">{{ stop.name }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="btn btn-primary">Find Trip</button>
+    </form>
+
+    {% if messages %}
+    <ul class="bus-messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if assigned_trip %}
+    <div class="bus-assigned-trip">
+        <h3>Your Assigned Trip</h3>
+        <table class="bus-trip-table">
+            <tr><th>Route</th><td>{{ assigned_trip.route_name }}</td></tr>
+            <tr><th>Start Stop</th><td>{{ assigned_trip.start_stop }}</td></tr>
+            <tr><th>End Stop</th><td>{{ assigned_trip.end_stop }}</td></tr>
+            <tr><th>Vehicle</th><td>{{ assigned_trip.vehicle_number }}</td></tr>
+            <tr><th>Departure Time</th><td>{{ assigned_trip.departure_time }}</td></tr>
+            <tr><th>Students Enrolled</th><td>{{ assigned_trip.students_enrolled }}/{{ assigned_trip.vehicle_capacity }}</td></tr>
+        </table>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="delete_assignment" class="bus-btn-danger">Cancel Assignment</button>
+        </form>
+    </div>
+    {% else %}
+        <p>No assigned trip yet.</p>
+    {% endif %}
+</div>
+
+<script>
+    let map;
+    let currentMarker;
+    
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map-container'), {
+            center: { lat: 24.8607, lng: 67.0011 },
+            zoom: 12
+        });
+
+        document.getElementById('select-location-btn').addEventListener('click', () => {
+            navigator.geolocation.getCurrentPosition(position => {
+                let lat = position.coords.latitude;
+                let lng = position.coords.longitude;
+
+                document.getElementById('current-lat').value = lat;
+                document.getElementById('current-lng').value = lng;
+                document.getElementById('current-location-display').textContent = `Lat: ${lat}, Lng: ${lng}`;
+
+                if (currentMarker) {
+                    currentMarker.setMap(null);
+                }
+
+                currentMarker = new google.maps.Marker({
+                    position: { lat, lng },
+                    map: map,
+                    title: "Your Location"
+                });
+
+                map.setCenter({ lat, lng });
+            });
+        });
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMTwxml0qqFhVy6NrkBg8gyvd_mAk1Drc&callback=initMap" async defer></script>
+
+{% endblock %}

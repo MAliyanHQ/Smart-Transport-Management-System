@@ -1,0 +1,9 @@
+{% extends 'home.html' %}
+{% block content %}
+<h2>Routes</h2>
+<ul>
+    {% for route in routes %}
+        <li>{{ route.start_stop }} to {{ route.end_stop }} - {{ route.distance_km }} km</li>
+    {% endfor %}
+</ul>
+{% endblock %}

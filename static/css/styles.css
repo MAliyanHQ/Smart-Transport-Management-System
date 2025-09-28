@@ -1,0 +1,777 @@
+/* General Reset
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9; /* Light bright background */
+    color: #333; /* Neutral dark text for readability */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header and Navbar */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
+
+/* Logo */
+.navbar-logo a {
+    font-size: 1.6rem;
+    color: #007bff; /* Vibrant blue */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.navbar-logo i {
+    font-size: 2rem;
+    margin-right: 10px;
+    color: #f39c12; /* Vibrant orange for the icon */
+}
+
+/* Navbar Links */
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    justify-content: center; /* Center links */
+}
+
+.navbar-menu li {
+    margin: 0 15px;
+}
+
+.navbar-menu a {
+    color: #007bff; /* Vibrant blue */
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.navbar-menu a i {
+    font-size: 1.2rem;
+    margin-right: 5px;
+    color: #f39c12; /* Orange for icons */
+}
+
+.navbar-menu a:hover {
+    color: #f39c12; /* Hover color for links */
+}
+
+/* Login/Register or Logout Section */
+.navbar-auth {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-auth a {
+    color: #007bff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.navbar-auth a i {
+    font-size: 1.2rem;
+    margin-right: 5px;
+    color: #f39c12;
+}
+
+.navbar-auth a:hover {
+    color: #f39c12;
+}
+
+.user-role {
+    margin-left: 20px;
+    font-size: 0.9rem;
+    color: #666; /* Subtle text color for user role */
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.user-role i {
+    margin-right: 5px;
+    color: #f39c12;
+}
+
+/* Footer */
+.footer {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    margin-top: 0;
+    position: relative; /* Change to relative for flexibility */
+    top: 10px; /* Move the footer upwards by 10px */
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Ensures vertical centering within the footer */
+    position: relative; /* Allow the positioning to be adjusted */
+    top: -10px; /* Moves the content upwards within the footer */
+}
+
+
+/* Ensure Footer is Always at the Bottom */
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh; /* Ensure body takes full height of the screen */
+    background-image: url('bg.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+main {
+    flex-grow: 1; /* Push the footer to the bottom */
+}
+
+/* Login Page Styles */
+.login-container {
+    max-width: 400px;
+    margin: 100px auto; /* Center the form vertically */
+    padding: 30px;
+    background: linear-gradient(145deg, #ffffff, #f3f3f3); /* Subtle gradient */
+    border: 1px solid #e0e0e0;
+    border-radius: 15px; /* Softer rounded corners */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Strong shadow for depth */
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px; /* Adjusted spacing below title */
+    color: #007bff; /* Vibrant blue for title */
+    font-size: 1.8rem;
+    font-family: 'Poppins', sans-serif; /* New font for title */
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Reduced spacing between fields */
+}
+
+.login-form label {
+    font-size: 1rem;
+    color: #555; /* Softer color for labels */
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif; /* New font for labels */
+    margin-bottom: 5px;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 12px; /* Comfortable padding for inputs */
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif; /* New font for inputs */
+    border: 1px solid #007bff; /* Blue border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle inner shadow */
+}
+
+.login-form input:focus {
+    background-color: #eef7ff; /* Light blue background on focus */
+    border-color: #005f99; /* Darker blue border on focus */
+    box-shadow: 0 0 6px rgba(0, 122, 204, 0.3); /* Blue focus glow */
+}
+
+.btn-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(145deg, #007bff, #005f99); /* Gradient for button */
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif; /* New font for button */
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.btn-login i {
+    margin-right: 8px; /* Spacing between icon and text */
+    font-size: 1.2rem;
+}
+
+.btn-login:hover {
+    background: linear-gradient(145deg, #005f99, #004f7a); /* Darker gradient on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px); /* Lift effect */
+}
+
+.btn-login:active {
+    transform: translateY(1px); /* Press-down effect */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* General Form Alignment */
+.login-form label,
+.login-form input,
+.btn-login {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Register Page Styles */
+.register-container {
+    max-width: 450px;
+    margin: 80px auto; /* Center vertically */
+    padding: 20px; /* Reduced padding for compact layout */
+    background: linear-gradient(145deg, #ffffff, #f9f9f9); /* Subtle gradient */
+    border: 1px solid #e0e0e0;
+    border-radius: 15px; /* Softer rounded corners */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Strong shadow for depth */
+}
+
+.register-container h2 {
+    text-align: center;
+    margin-bottom: 10px; /* Less spacing below title */
+    color: #007bff; /* Vibrant blue for title */
+    font-size: 1.8rem;
+    font-family: 'Poppins', sans-serif; /* Modern font */
+    font-weight: bold;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Tighter spacing between elements */
+}
+
+.register-form label {
+    font-size: 1rem;
+    color: #333; /* Neutral dark color for labels */
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif; /* Clean, readable font */
+}
+
+.register-form input,
+.register-form select,
+.register-form textarea {
+    width: 100%;
+    padding: 10px; /* Comfortable padding */
+    font-size: 0.95rem;
+    font-family: 'Roboto', sans-serif; /* Same font for inputs */
+    border: 1px solid #007bff; /* Blue border */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #f9f9f9; /* Subtle background */
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+}
+
+.register-form input:focus,
+.register-form select:focus,
+.register-form textarea:focus {
+    background-color: #eef7ff; /* Light blue focus background */
+    border-color: #005f99; /* Darker blue border on focus */
+    box-shadow: 0 0 6px rgba(0, 122, 204, 0.3); /* Blue focus glow */
+}
+
+.register-form .helptext {
+    font-size: 0.85rem;
+    color: #666; /* Subtle text color for help text */
+    margin-top: -5px; /* Close the help text to input */
+    margin-bottom: 5px; /* Minimal gap */
+    line-height: 1.2; /* Compact line spacing */
+}
+
+.register-form .errorlist {
+    font-size: 0.85rem;
+    color: #d9534f; /* Red for errors */
+    margin-top: -5px; /* Reduce unnecessary gaps */
+    margin-bottom: 5px;
+    line-height: 1.2; /* Compact line spacing */
+}
+
+.register-form ul {
+    padding-left: 20px; /* Proper indentation for bullet points */
+    margin-top: -5px; /* Pull list closer to input */
+    margin-bottom: 5px; /* Minimal spacing below */
+    font-size: 0.85rem;
+    color: #666; /* Match help text color */
+}
+
+.register-form ul li {
+    margin-bottom: 3px; /* Reduce gap between list items */
+}
+
+.btn-register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(145deg, #007bff, #005f99); /* Gradient for button */
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif; /* Bold button font */
+    font-weight: bold;
+    border-radius: 8px; /* Rounded button */
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-top: 10px; /* Minimal spacing above button */
+}
+
+.btn-register i {
+    margin-right: 8px; /* Spacing between icon and text */
+    font-size: 1.2rem;
+}
+
+.btn-register:hover {
+    background: linear-gradient(145deg, #005f99, #004f7a); /* Darker gradient on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px); /* Lift effect */
+}
+
+.btn-register:active {
+    transform: translateY(1px); /* Press-down effect */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* General Form Alignment */
+.register-form label,
+.register-form input,
+.register-form ul,
+.btn-register {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Ensure Footer or Content Fills Entire Page */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
+/* Styles for InfoBox */
+.gm-style-iw {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    max-width: 250px;
+    line-height: 1.5;
+}
+
+/* Remove close button from InfoBox */
+.gm-style-iw button.gm-ui-hover-effect {
+    display: none !important;
+}
+
+/* Modal for Adding Bus Stop */
+#add-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 90%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+/* Title in the Modal */
+#add-modal h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Input Field */
+#add-modal input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Read-only Address Field */
+#modal-stop-address {
+    background-color: #f5f5f5;
+    padding: 10px;
+    font-size: 14px;
+    color: #555;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* Buttons inside the Modal */
+#add-modal button {
+    padding: 10px 16px;
+    font-size: 14px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Save Button */
+#add-modal button[type="submit"] {
+    background-color: green;
+    margin-right: 10px;
+}
+
+/* Cancel Button */
+#add-modal button#add-cancel {
+    background-color: gray;
+}
+
+/* Add hover effects for buttons */
+#add-modal button:hover {
+    opacity: 0.9;
+}
+
+/* Overlay */
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.gm-style-iw button.gm-ui-hover-effect {
+    display: none !important;
+}
+
+/* Button Container */
+#button-container {
+    position: absolute;
+    bottom: 150px; /* Position it above the footer */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center alignment correction */
+    z-index: 1000; /* Ensure it overlays on the map */
+}
+
+/* Add Stop Button */
+#add-stop-btn {
+    padding: 15px 30px;
+    border: 2px solid #007bff; /* Green border */
+    border-radius: 30px; /* Rounded button */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff; /* Text and icon color */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Space between icon and text */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Icon inside the button */
+#add-stop-btn i {
+    font-size: 24px; /* Icon size */
+}
+
+/* Hover effect for button */
+#add-stop-btn:hover {
+    transform: scale(1.1); /* Slight zoom effect */
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Focus outline */
+#add-stop-btn:focus {
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(0, 128, 0, 0.8);
+}
+
+/* Map container */
+#map-container {
+    position: relative; /* This will make the map fixed to the screen */
+    top: 20px; /* 75px from the top of the viewport */
+    left: 0;
+    width: 100vw; /* 85% of the viewport width */
+    height: 100vh; /* 85% of the viewport height */
+    margin: 0; /* Reset margin */
+    padding: 0; /* No padding */
+    z-index: 1; /* Optional: ensure it stays behind other elements if needed */
+}
+
+
+
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 20px;
+        margin: 50px auto;
+    }
+    
+    .login-container h2 {
+        font-size: 1.5rem;
+    }
+    
+    .register-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .btn-login {
+        font-size: 1rem;
+        padding: 12px;
+    }
+}
+
+.dashboard-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h2, h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.trip-section, .payment-section {
+    margin-bottom: 30px;
+}
+
+.trip-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.trip-table th, .trip-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.payment-due {
+    color: red;
+    font-weight: bold;
+}
+
+.payment-paid {
+    color: green;
+    font-weight: bold;
+}
+
+.btn-pay {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.btn-pay:hover {
+    background: #218838;
+}
+
+
+@media (max-width: 768px) {
+    .navbar-menu {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar-menu li {
+        margin: 10px 0;
+    }
+
+    .navbar-auth {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar-auth a {
+        margin: 5px 0;
+    }
+}
+
+
+/* 🌟 Transport Welcome Section */
+.transport-welcome-section {
+    text-align: center;
+    margin-top: auto;
+    background: linear-gradient(90deg, #f9fbfc, #f9fbfc); /* Gradient background */
+    color: rgb(0, 30, 255);
+    padding: 60px 20px;
+    border-radius: 12px;
+    opacity: 95%;
+    width: 90%;
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 800px;
+    margin: 50px auto;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* ✨ Title */
+.transport-welcome-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+/* ✨ Text */
+.transport-welcome-text {
+    font-size: 18px;
+    font-weight: 300;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+/* 🌟 Button Container */
+.transport-welcome-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* ✅ Register Button */
+.transport-btn-primary {
+    background: #28a745;
+    color: white;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.transport-btn-primary:hover {
+    background: #218838;
+    transform: scale(1.05);
+}
+
+/* 🔹 Login Button */
+.transport-btn-secondary {
+    background: #222df9;
+    color: #ffffff;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.transport-btn-secondary:hover {
+    background: #070c95;
+    transform: scale(1.05);
+}
+
+/* 🔄 Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 🌍 Responsive Adjustments */
+@media (max-width: 768px) {
+    .transport-welcome-section {
+        width: 95%;
+        padding: 40px 15px;
+    }
+
+    .transport-welcome-title {
+        font-size: 28px;
+    }
+
+    .transport-btn-primary,
+    .transport-btn-secondary {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}

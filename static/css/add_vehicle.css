@@ -1,0 +1,215 @@
+/* General Container Styling */
+.container {
+    max-width: 700px;
+    margin: 60px auto 20px; /* Add margin-top: 60px */
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    margin-top: calc(60px + var(--navbar-height));    
+}
+
+body {
+    padding-top: 60px; /* Adjust based on navbar height */
+}
+
+
+/* Section Titles */
+h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
+/* Form Section Styling */
+.form-section {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Fields */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form label {
+    font-weight: bold;
+    color: #555;
+    font-size: 14px;
+}
+
+form input,
+form select,
+form textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+form button[type="submit"] {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Vehicle List Styling */
+.vehicle-list {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.vehicle-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.vehicle-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vehicle-list li:last-child {
+    border-bottom: none;
+}
+
+.vehicle-item span {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+
+.vehicle-item a {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 12px;
+    transition: background-color 0.3s;
+}
+
+.vehicle-item a:hover {
+    background-color: #a71d2a;
+}
+
+/* Empty Vehicle List Styling */
+.vehicle-list li.empty {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    form button[type="submit"] {
+        font-size: 13px;
+        padding: 6px 14px;
+    }
+
+    .vehicle-item span {
+        font-size: 13px;
+    }
+
+    .vehicle-item a {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+}
+
+.container {
+    margin-top: 20px;
+    padding: 15px;
+    max-width: 800px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container h2 {
+    font-size: 1.5rem; /* Slightly smaller heading */
+    margin-bottom: 15px;
+    text-align: center;
+    color: #333;
+}
+
+.route-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.route-list ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    font-size: 0.9rem; /* Reduce text size */
+}
+
+.route-list ul li span {
+    flex-grow: 1;
+    margin-right: 10px;
+    font-weight: 500;
+    color: #333;
+}
+
+.route-list ul li .btn {
+    padding: 6px 12px;
+    font-size: 0.8rem; /* Smaller button text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #e74c3c; /* Red color for "Remove" button */
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.route-list ul li .btn:hover {
+    background-color: #c0392b; /* Darker red on hover */
+}
+
+.route-list ul li:last-child {
+    margin-bottom: 0; /* Remove margin for the last item */
+}
+
+.route-list {
+    text-align: center;
+}

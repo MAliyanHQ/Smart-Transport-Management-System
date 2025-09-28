@@ -1,0 +1,9 @@
+{% extends 'home.html' %}
+{% block content %}
+<h2>Notifications</h2>
+<ul>
+    {% for notification in notifications %}
+        <li>{{ notification.title }}: {{ notification.message }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

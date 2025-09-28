@@ -1,0 +1,58 @@
+{% extends 'home.html' %}
+
+{% block title %}Bus Stops{% endblock %}
+
+{% block content %}
+<h2>Bus Stops</h2>
+<div id="map-container" style="height: 600px; width: 100%; margin-top: 20px;"></div>
+
+<!-- Include Google Maps JavaScript API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMTwxml0qqFhVy6NrkBg8gyvd_mAk1Drc"></script>
+
+<script>
+    let map;
+    const markers = {}; // Store markers by stop ID
+
+    function initMap() {
+        const centerLocation = { lat: 24.8607, lng: 67.0011 }; // Karachi coordinates
+        map = new google.maps.Map(document.getElementById('map-container'), {
+            center: centerLocation,
+            zoom: 12,
+        });
+
+        // Load existing bus stops
+        loadBusStops();
+    }
+
+    // Fetch bus stops from the backend and display them on the map
+    function loadBusStops() {
+        fetch('{% url "get_stops" %}')
+            .then((response) => response.json())
+            .then((data) => {
+                data.forEach((stop) => {
+                    const lat = parseFloat(stop.latitude);
+                    const lng = parseFloat(stop.longitude);
+                    const marker = new google.maps.Marker({
+                        position: { lat, lng },
+                        map: map,
+                        title: stop.name,
+                    });
+
+                    // Add a tooltip with the bus stop name
+                    const infoWindow = new google.maps.InfoWindow({
+                        content: `<div><strong>${stop.name}</strong><br>${stop.address}</div>`,
+                    });
+
+                    marker.addListener('mouseover', () => infoWindow.open(map, marker));
+                    marker.addListener('mouseout', () => infoWindow.close());
+
+                    markers[stop.id] = marker; // Save marker by ID
+                });
+            })
+            .catch((error) => console.error('Error loading bus stops:', error));
+    }
+
+    // Initialize the map on page load
+    window.onload = initMap;
+</script>
+{% endblock %}

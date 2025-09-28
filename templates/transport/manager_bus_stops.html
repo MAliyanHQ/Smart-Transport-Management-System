@@ -1,0 +1,287 @@
+{% extends 'home.html' %}
+
+{% block title %}Manage Bus Stops{% endblock %}
+
+{% block content %}
+<h2>Manage Bus Stops</h2>
+<div id="map-container" style="height: 600px; width: 100%; margin-top: 20px;"></div>
+
+<!-- Button to Add Stops -->
+<div id="button-container">
+    <button id="add-stop-btn" aria-label="Add New Stop">
+        <i class="bi bi-plus-circle"></i> Add New Stop
+    </button>
+</div>
+
+
+<!-- Instruction Modal -->
+<div id="instruction-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8); color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1000; text-align: center;">
+    <p>Click on the map to select a location for the new bus stop.</p>
+</div>
+
+
+<!-- Modal for Adding Bus Stop -->
+<div id="add-modal" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description" 
+    style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1000; width: 90%; max-width: 400px;">
+    
+    <h3 id="modal-title">Add Bus Stop</h3>
+    <form id="add-stop-form">
+        {% csrf_token %}
+        
+        <!-- Bus Stop Name -->
+        <label for="modal-stop-name">Name:</label>
+        <input type="text" id="modal-stop-name" name="name" placeholder="Bus Stop Name" required 
+            style="margin-bottom: 10px; width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+        
+        <!-- Address Display -->
+        <p id="modal-stop-address" style="background-color: #f9f9f9; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"></p>
+        
+        <!-- Hidden Coordinates -->
+        <input type="hidden" id="modal-stop-lat" name="latitude">
+        <input type="hidden" id="modal-stop-lng" name="longitude">
+        
+        <!-- Action Buttons -->
+        <div style="text-align: right; margin-top: 10px;">
+            <button type="submit" style="margin-right: 10px; padding: 8px 16px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer;">Save</button>
+            <button type="button" id="add-cancel" style="padding: 8px 16px; background-color: gray; color: white; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+        </div>
+    </form>
+</div>
+
+
+
+<!-- Confirmation Modal -->
+<div id="confirmation-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background-color: rgba(0, 128, 0, 0.9); color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1000; text-align: center;">
+    <p>Bus stop created successfully!</p>
+</div>
+
+<div id="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 999;"></div>
+
+<!-- Include Google Maps JavaScript API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMTwxml0qqFhVy6NrkBg8gyvd_mAk1Drc"></script>
+
+<script>
+    let map;
+    const markers = {}; // Store markers by stop ID
+    let modalLat, modalLng; // Track coordinates for adding a new stop
+    let isAddingStop = false; // Track if the user is adding a stop
+
+    // Disable the default browser context menu globally
+    document.addEventListener('contextmenu', (event) => {
+        event.preventDefault(); // Suppress the browser's default context menu
+    });
+
+
+    function initMap() {
+        const centerLocation = { lat: 24.8607, lng: 67.0011 }; // Karachi coordinates
+        map = new google.maps.Map(document.getElementById('map-container'), {
+            center: centerLocation,
+            zoom: 12,
+        });
+    
+        // Load existing bus stops
+        loadBusStops();
+    
+        // Add a new bus stop using a modal
+        map.addListener('click', async (event) => {
+            if (isAddingStop) {
+                modalLat = event.latLng.lat();
+                modalLng = event.latLng.lng();
+    
+                // Fetch the address using Google Maps Geocoding API
+                
+    
+                // Pre-fill address and show the Add Bus Stop modal
+                document.getElementById('modal-stop-name').value = ''; // Clear previous name
+                document.getElementById('modal-stop-address').textContent = await fetchAddress(modalLat, modalLng);
+                document.getElementById('modal-stop-lat').value = modalLat.toFixed(6);
+                document.getElementById('modal-stop-lng').value = modalLng.toFixed(6);
+                document.getElementById('add-modal').style.display = 'block';
+                document.getElementById('modal-overlay').style.display = 'block';
+            }
+        });
+    }
+    
+    // Function to fetch the address from coordinates using Google Maps Geocoding API
+    async function fetchAddress(lat, lng) {
+        const apiKey = 'AIzaSyBMTwxml0qqFhVy6NrkBg8gyvd_mAk1Drc';
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
+    
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+    
+            if (data.status === "OK") {
+                return data.results[0].formatted_address; // Return the formatted address
+            } else {
+                return data.status;
+            }
+        } catch (error) {
+            return 'Unknown Address with err';
+        }
+    }
+    
+    
+    
+    // Event listener for "Add New Stop" button
+    document.getElementById('add-stop-btn').addEventListener('click', () => {
+        isAddingStop = true;
+        showInstructionModal(); // Show the instruction modal
+    });
+    
+    // Cancel Add Stop Modal
+    document.getElementById('add-cancel').addEventListener('click', () => {
+        document.getElementById('add-modal').style.display = 'none';
+        document.getElementById('modal-overlay').style.display = 'none';
+        isAddingStop = false;
+    });
+    
+
+    // Fetch bus stops from the backend and display them on the map
+    function loadBusStops() {
+        fetch('{% url "get_stops" %}')
+            .then((response) => response.json())
+            .then((data) => {
+                data.forEach((stop) => {
+                    const lat = parseFloat(stop.latitude);
+                    const lng = parseFloat(stop.longitude);
+                    const marker = new google.maps.Marker({
+                        position: { lat, lng },
+                        map: map,
+                        title: stop.name,
+                    });
+                    const addr = stop.address
+
+                    // Add a tooltip with the bus stop name
+                    const infoWindow = new google.maps.InfoWindow({
+                        content: `<div><strong>${stop.name}</strong><br>${stop.address}</div>`,
+                    });
+
+                    marker.addListener('mouseover', () => infoWindow.open(map, marker));
+                    marker.addListener('mouseout', () => infoWindow.close());
+
+                    // Add a click listener for deletion
+                    marker.addListener('rightclick', () => {
+                        openDeleteModal(lat, lng, marker, stop.name);
+                    });
+
+                    markers[stop.id] = marker; // Save marker by ID
+                });
+            })
+            .catch((error) => console.error('Error loading bus stops:', error));
+    }
+
+    function openDeleteModal(lat, lng, marker, name) {
+        const deleteModal = document.createElement('div');
+        deleteModal.innerHTML = `
+            <div class="modal" style="display: block; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1000;">
+                <p>Are you sure you want to delete the stop: "${name}"?</p>
+                <button id="delete-confirm" style="margin-right: 10px; padding: 8px 16px; background-color: red; color: white; border: none; border-radius: 4px; cursor: pointer;">Yes</button>
+                <button id="delete-cancel" style="padding: 8px 16px; background-color: gray; color: white; border: none; border-radius: 4px; cursor: pointer;">No</button>
+            </div>
+        `;
+        document.body.appendChild(deleteModal);
+
+        document.getElementById('delete-confirm').addEventListener('click', () => {
+            deleteBusStop(lat, lng, marker);
+            deleteModal.remove();
+        });
+
+        document.getElementById('delete-cancel').addEventListener('click', () => {
+            deleteModal.remove();
+        });
+    }
+
+    // Delete a bus stop
+    function deleteBusStop(lat, lng, marker) {
+        fetch('{% url "delete_stop" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+            body: JSON.stringify({ latitude: lat, longitude: lng }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.status === 'success') {
+                    marker.setMap(null); // Remove the marker from the map
+                } else {
+                    console.error(data.message);
+                }
+            })
+            .catch((error) => console.error('Error deleting bus stop:', error));
+    }
+
+    // Event listener for "Add New Stop" button
+    document.getElementById('add-stop-btn').addEventListener('click', () => {
+        isAddingStop = true;
+    });
+
+    // Show the instruction modal and fade out
+    function showInstructionModal() {
+        const modal = document.getElementById('instruction-modal');
+        modal.style.display = 'block';
+
+        // Fade out after 3 seconds
+        setTimeout(() => {
+            modal.style.transition = 'opacity 1s ease';
+            modal.style.opacity = '0';
+
+            // Hide the modal completely after the fade-out
+            setTimeout(() => {
+                modal.style.display = 'none';
+                modal.style.opacity = '1'; // Reset opacity for the next use
+            }, 1500);
+        }, 2000);
+    }
+
+    // Event listener for "Add New Stop" button
+    document.getElementById('add-stop-btn').addEventListener('click', () => {
+        isAddingStop = true;
+        showInstructionModal(); // Show the instruction modal
+    });
+    
+    
+    
+
+    // Cancel Add Stop Modal
+    document.getElementById('add-cancel').addEventListener('click', () => {
+        document.getElementById('add-modal').style.display = 'none';
+        document.getElementById('modal-overlay').style.display = 'none';
+        isAddingStop = false;
+    });
+
+    // Handle Add Stop Form Submission
+    document.getElementById('add-stop-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('modal-stop-name').value;
+        const address = document.getElementById('modal-stop-address').value;
+
+        fetch('/transport/add-bus-stop/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+            body: JSON.stringify({ name, address, latitude: modalLat, longitude: modalLng }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.id) {
+                    location.reload(); // Reload the page to show the new stop
+                } else {
+                    console.error('Failed to add bus stop.');
+                }
+            })
+            .catch((error) => console.error('Error adding bus stop:', error));
+    });
+
+    // Initialize the map on page load
+    window.onload = initMap;
+</script>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'home.html' %}
+
+{% block title %}Student Payments{% endblock %}
+
+{% block content %}
+<div class="student-payments-container">
+    <h2>Student Payment History</h2>
+
+    {% if payments %}
+        <table class="student-payments-table">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Amount Due (PKR)</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                    <tr>
+                        <td>{{ payment.student.get_full_name }}</td>
+                        <td>{{ payment.student.email }}</td>
+                        <td>{{ payment.student.phone_number }}</td>
+                        <td>{{ payment.amount }}</td>
+                        <td>{{ payment.due_date|date:"F d, Y" }}</td>
+                        <td>
+                            <span class="payment-status {% if payment.status == 'pending' %}pending{% else %}paid{% endif %}">
+                                {{ payment.status|capfirst }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if payment.status == "pending" %}
+                                <form method="POST" action="{% url 'confirm_payment' payment.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="payment-action-btn">Mark as Paid</button>
+                                </form>
+                            {% else %}
+                                ✅ Paid
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7" class="no-payments-message">No payment records found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="no-payments-message">No payments found.</p>
+    {% endif %}
+</div>
+{% endblock %}

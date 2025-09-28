@@ -1,0 +1,55 @@
+{% extends 'home.html' %}
+
+{% block title %}Driver Dashboard{% endblock %}
+
+{% block content %}
+<div class="driver-dashboard-container">
+    <h2 class="driver-dashboard-title">Driver Dashboard</h2>
+
+    {% for assignment in assignments %}
+        <div class="assignment-box">
+            <h3>Route: {{ assignment.route_name }}</h3>
+            <p><strong>Vehicle:</strong> {{ assignment.vehicle_number }}</p>
+            <p><strong>Start Time:</strong> {{ assignment.start_time }}</p>
+            <p><strong>Capacity:</strong> {{ assignment.capacity }}</p>
+            <p><strong>Onboard Students:</strong> {{ assignment.onboard_students }}</p>
+
+            {% if assignment.trip_exists %}
+                <h4>Trip Details</h4>
+                <table class="trip-table">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Onboard</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in assignment.trip.assigned_students.all %}
+                            <tr>
+                                <td>{{ student.username }}</td>
+                                <td>
+                                    <form method="POST" action="{% url 'toggle_onboard_status' assignment.trip.id student.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" 
+                                            class="{% if student in assignment.trip.onboard_students.all %} onboard-btn {% else %} not-onboard-btn {% endif %}">
+                                            {% if student in assignment.trip.onboard_students.all %}
+                                                ✅ Onboard
+                                            {% else %}
+                                                ❌ Not Onboard
+                                            {% endif %}
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="no-trip">⚠️ No trip assigned to this route.</p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p class="no-trip">No assignments available.</p>
+    {% endfor %}
+</div>
+{% endblock %}

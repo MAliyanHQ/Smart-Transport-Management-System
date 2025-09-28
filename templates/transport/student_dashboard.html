@@ -1,0 +1,43 @@
+{% extends 'home.html' %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+
+{% block content %}
+<div class="dashboard-container">
+    <h2>Student Dashboard</h2>
+
+    <!-- ✅ Trip Details Section -->
+    <div class="trip-section">
+        <h3>Assigned Trip</h3>
+        {% if trip_info %}
+            <table class="trip-table">
+                <tr><th>Route</th><td>{{ trip_info.route_name }}</td></tr>
+                <tr><th>Start Stop</th><td>{{ trip_info.start_stop }}</td></tr>
+                <tr><th>End Stop</th><td>{{ trip_info.end_stop }}</td></tr>
+                <tr><th>Vehicle Number</th><td>{{ trip_info.vehicle_number }}</td></tr>
+                <tr><th>Departure Time</th><td>{{ trip_info.departure_time }}</td></tr>
+                <tr><th>Students Enrolled</th><td>{{ trip_info.students_enrolled }} / {{ trip_info.vehicle_capacity }}</td></tr>
+            </table>
+        {% else %}
+            <p>No assigned trip found.</p>
+        {% endif %}
+    </div>
+
+    <!-- ✅ Payment Details Section -->
+    <div class="payment-section">
+        <h3>Payment Status</h3>
+        {% if payment_status %}
+            {% if payment_status.status == "Due" %}
+                <p class="payment-due">Payment Due: PKR {{ payment_status.amount }} (Due Date: {{ payment_status.due_date }})</p>
+                <a href="{% url 'student_payments' %}" class="btn-pay">Pay Now</a>
+            {% else %}
+                <p class="payment-paid">Last Payment Paid ✅</p>
+                <p>Next Payment Due on: {{ payment_status.next_due_date }}</p>
+            {% endif %}
+        {% else %}
+            <p>No payment records found.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

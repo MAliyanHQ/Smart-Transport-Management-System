@@ -1,0 +1,8 @@
+Django==5.1.4
+mysqlclient==2.2.0
+Pillow==10.2.0
+opencv-python==4.11.0
+numpy==1.26.4
+pytesseract==0.3.10
+django-crispy-forms==2.1
+django-allauth==0.58.2

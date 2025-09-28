@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Smart Transport{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/users/register/">Register</a></li>
+                <li><a href="/transport/bus-stops/">Bus Stops</a></li>
+                <li><a href="/payments/history/">Payments</a></li>
+                <li><a href="/notifications/">Notifications</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="/users/logout/">Logout</a></li>
+                {% else %}
+                    <li><a href="/users/login/">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        <!-- Page content will be injected here -->
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2025 Smart Transport</p>
+    </footer>
+</body>
+</html>

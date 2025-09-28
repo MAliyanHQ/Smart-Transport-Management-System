@@ -1,0 +1,89 @@
+{% extends 'home.html' %}
+
+{% block title %}Manager Dashboard{% endblock %}
+
+{% block content %}
+<div class="manager-dashboard-container">
+    
+    <!-- 🚀 Welcome Message -->
+    <h2>Welcome, {{ user.first_name }}! 🚀</h2>
+
+    <!-- 🚍 Assigned Vehicles -->
+    <h3>Assigned Vehicles</h3>
+    <table class="manager-dashboard-table">
+        <thead>
+            <tr>
+                <th>Vehicle Number</th>
+                <th>Model</th>
+                <th>Capacity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vehicle in vehicles %}
+            <tr>
+                <td>{{ vehicle.number_plate }}</td>
+                <td>{{ vehicle.model }}</td>
+                <td>{{ vehicle.capacity }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3">No vehicles assigned.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- 🗺️ Assigned Trips -->
+    <h3>Assigned Trips</h3>
+    <table class="manager-dashboard-table">
+        <thead>
+            <tr>
+                <th>Route</th>
+                <th>Vehicle</th>
+                <th>Departure Time</th>
+                <th>Students Enrolled</th>
+                <th>Capacity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trip in trips %}
+            <tr>
+                <td>{{ trip.assignment.route.name }}</td>
+                <td>{{ trip.assignment.vehicle.number_plate }}</td>
+                <td>{{ trip.assignment.start_time|time:"H:i" }}</td>
+                <td>{{ trip.assigned_students.count }}</td>
+                <td>{{ trip.assignment.vehicle.capacity }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No trips assigned.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- 💰 Recent Payments -->
+    <h3>Recent Payments Received</h3>
+    <table class="manager-dashboard-table">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Paid On</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in recent_payments %}
+            <tr>
+                <td>{{ payment.student.username }}</td>
+                <td>PKR {{ payment.amount }}</td>
+                <td class="{% if payment.status == 'paid' %}status-paid{% else %}status-pending{% endif %}">
+                    {{ payment.status|title }}
+                </td>
+                <td>{{ payment.due_date|date:"Y-m-d" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">No recent payments received.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

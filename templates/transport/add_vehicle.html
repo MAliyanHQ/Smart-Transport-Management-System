@@ -1,0 +1,32 @@
+{% extends 'home.html' %}
+
+{% block title %}Add Vehicle{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-section">
+        <h2>Add Vehicle</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Save Vehicle</button>
+        </form>
+    </div>
+
+    <div class="vehicle-list">
+        <h2>Saved Vehicles</h2>
+        <ul>
+            {% for vehicle in vehicles %}
+                <li>
+                    <div class="vehicle-item">
+                        <span>{{ vehicle.number_plate }} ({{ vehicle.model }})</span>
+                        <a href="{% url 'delete_vehicle' vehicle.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this vehicle?');">Remove</a>
+                    </div>
+                </li>
+            {% empty %}
+                <li>No vehicles saved yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Smart Transport{% endblock %}</title>
+    {% load static %}
+    <!-- Boxicons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="icon" href="{% static 'css/icon.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}">    
+    <link rel="stylesheet" href="{% static 'css/add_vehicle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/assign_driver.css' %}">
+    <link rel="stylesheet" href="{% static 'css/student_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/driver_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/manager_dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/student_trip.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bus_stops.css' %}">
+    <link rel="stylesheet" href="{% static 'css/student_payments.css' %}">
+    <link rel="stylesheet" href="{% static 'css/manager_payments.css' %}">
+
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <!-- Logo -->
+            <div class="navbar-logo">
+                <a href="{% if user.is_authenticated %}
+                            {% if user.role == 'student' %}{% url 'student_dashboard' %}
+                            {% elif user.role == 'driver' %}{% url 'driver_dashboard' %}
+                            {% elif user.role == 'manager' %}{% url 'manager_dashboard' %}
+                            {% else %}/{% endif %}
+                        {% else %}/{% endif %}">
+                    <i class="bx bxs-bus"></i> <span>Smart Transport</span>
+                </a>
+            </div>
+
+            <!-- Navbar Links -->
+            <ul class="navbar-menu">
+                {% comment %} <li><a href="/"><i class="bx bx-home"></i> Home</a></li> {% endcomment %}
+                
+                {% if user.is_authenticated and user.role == 'student' %}
+                <li><a href="/transport/bus-stops/"><i class="bx bx-map"></i> Bus Stops</a></li>
+                <li><a href="/transport/student-dashboard/"><i class="bx bx-box"></i> Student Dashboard</a></li>
+                <li><a href="/transport/student-trip/"><i class="bx bx-trip"></i> Student Trip</a></li>
+                <li><a href="/payments/student/"><i class="bx bx-wallet"></i> My Payments</a></li> 
+                {% endif %}
+                
+                {% if user.is_authenticated and user.role == 'driver' %}
+                <li><a href="/transport/bus-stops/"><i class="bx bx-map"></i> Bus Stops</a></li>
+                <li><a href="/transport/driver-dashboard/"><i class="bx bx-taxi"></i> Driver Dashboard</a></li>
+                {% endif %}
+                
+                {% if user.is_authenticated and user.role == 'manager' %}
+                <li><a href="/transport/bus-stops/"><i class="bx bx-map"></i> Bus Stops</a></li>
+                <li><a href="/transport/manager-dashboard/"><i class="bx bx-user-circle"></i> Manager Dashboard</a></li>
+                    <li><a href="/payments/manager/"><i class="bx bx-money"></i> Manage Payments</a></li>
+                    <li><a href="/transport/add-vehicle/"><i class="bx bx-car"></i> Add Vehicle</a></li>
+                    <li><a href="/transport/add-route/"><i class="bx bx-merge"></i> Add Route</a></li>
+                    <li><a href="/transport/assign-driver/"><i class="bx bx-user-check"></i> Assign Driver</a></li>
+                {% endif %}
+
+            
+            </ul>
+
+            <!-- Login/Register or Logout -->
+            <div class="navbar-auth">
+                {% if user.is_authenticated %}
+                    <a href="/users/logout/"><i class="bx bx-log-out"></i> Logout</a>
+                    <span class="user-role"><i class="bx bx-user"></i> {{ user.username }}</span>
+                {% else %}
+                    <a href="/users/login/"><i class="bx bx-log-in"></i> Login</a>
+                    <a href="/users/register/"><i class="bx bx-user-plus"></i> Register</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        <!-- Page content will be injected here -->
+
+        {% if not user.is_authenticated %}
+        <section class="transport-welcome-section">
+            <h2 class="transport-welcome-title">Welcome to Smart Transport</h2>
+            <p class="transport-welcome-text">Efficient and Seamless Transport Management for Students.</p>
+            <div class="transport-welcome-buttons">
+                <a href="/users/register/" class="transport-btn-primary">Register Now</a>
+                <a href="/users/login/" class="transport-btn-secondary">Login</a>
+            </div>
+        </section>
+        
+        {% endif %}
+
+        {% endblock %}
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Smart Transport. All rights reserved.</p>
+        </div>
+    </footer>    
+</body>
+</html>
